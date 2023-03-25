@@ -66,15 +66,16 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
     id,
     isArchived,
     groupedCalls,
+    createdAt,
   } = activity;
   const [toBeArchived, setToBeArchived] = useState<boolean>(false);
   const [archived, setArchived] = useState<boolean>(false);
   const [expand, setExpand] = useState<boolean>(false);
   const callTypeIcon = getActivityCallTypeIcon(callType, direction);
   const numberOfGroupedCalls =
-    groupedCalls.length > 0 ? groupedCalls.length : 0;
+    groupedCalls.length > 0 ? groupedCalls.length : 1;
   const durationInfo =
-    numberOfGroupedCalls > 0
+    numberOfGroupedCalls > 1
       ? numberOfGroupedCalls + ' calls '
       : getDurationInfo(duration);
   const callTypeColor =
@@ -103,14 +104,14 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
       onClick={() => setExpand(!expand)}
       archived={archived}
       expand={expand}
-      numberOfChildren={numberOfGroupedCalls || 0}
+      numberOfChildren={numberOfGroupedCalls || 1}
     >
       <VisibleContent>
         <ContactAvatar src={users[id]} />
         <ActivityInfo>
           <PhoneNumber>
             {direction === DirectionEnum.outbound ? from : to}
-            {numberOfGroupedCalls && (
+            {numberOfGroupedCalls > 1 && (
               <GroupedCallsBubble callTypeColor={callTypeColor}>
                 {numberOfGroupedCalls}
               </GroupedCallsBubble>
@@ -125,14 +126,14 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
             )}
             {callType === CallTypeEnum.voicemail && (
               <CallDuration>
-                left {numberOfGroupedCalls > 0 ? numberOfGroupedCalls : 'a'}{' '}
-                voicemail{numberOfGroupedCalls > 0 ? 's' : ''} on{' '}
+                left {numberOfGroupedCalls > 1 ? numberOfGroupedCalls : 'a'}{' '}
+                voicemail{numberOfGroupedCalls > 1 ? 's' : ''} on{' '}
                 {moment(activity.createdAt).format('MMM Do')}
               </CallDuration>
             )}
             {callType === CallTypeEnum.missed && (
               <CallDuration>
-                {numberOfGroupedCalls > 0
+                {numberOfGroupedCalls > 1
                   ? numberOfGroupedCalls + ' calls'
                   : ''}{' '}
                 missed on {moment(activity.createdAt).format('MMM Do')}
@@ -152,17 +153,22 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
       </VisibleContent>
       <ExpandableContent
         isOpen={expand}
-        numberOfChildren={numberOfGroupedCalls || 0}
+        numberOfChildren={numberOfGroupedCalls || 1}
       >
-        {groupedCalls.map((call) => {
-          const { createdAt, id, duration } = call;
-          const durationInfo = getDurationInfo(duration);
-          return (
-            <CallTime key={id}>
-              at {moment(createdAt).format('hh:mm a')} • last for {durationInfo}
-            </CallTime>
-          );
-        })}
+        {numberOfGroupedCalls > 1 ? (
+          groupedCalls.map((call) => {
+            const { createdAt, id, duration } = call;
+            const durationInfo = getDurationInfo(duration);
+            return (
+              <CallTime key={id}>
+                at {moment(createdAt).format('hh:mm a')} • last for{' '}
+                {durationInfo}
+              </CallTime>
+            );
+          })
+        ) : (
+          <CallTime key={id}>at {moment(createdAt).format('hh:mm a')}</CallTime>
+        )}
       </ExpandableContent>
     </Card>
   );
