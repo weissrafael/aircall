@@ -1,9 +1,10 @@
+import type { Persister } from '@tanstack/query-persist-client-core';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
-import { useQuery, useQueryClient, QueryClient } from '@tanstack/react-query';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { QueryClient } from '@tanstack/react-query';
 
 export default class QueryClientProvider {
   queryClient: QueryClient;
+  persister: Persister;
 
   constructor() {
     const ONE_HOUR = 1000 * 60 * 60;
@@ -16,7 +17,7 @@ export default class QueryClientProvider {
       },
     });
 
-    createSyncStoragePersister({
+    this.persister = createSyncStoragePersister({
       storage: window.localStorage,
     });
   }
