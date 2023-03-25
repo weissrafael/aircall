@@ -116,6 +116,7 @@ export const componentSize = {
   callTimeHeight: 26,
   cardHeight: 74,
   archiveButtonSize: 40,
+  loaderSize: 26,
   groupedCallBubbleSize: 20,
   actionsContainerHeight: 50,
   contentBoxMaxWidth: 250,

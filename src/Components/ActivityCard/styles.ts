@@ -1,3 +1,5 @@
+import ErrorIcon from '@mui/icons-material/Error';
+import { CircularProgress } from '@mui/material';
 import styled, { css } from 'styled-components';
 
 import {
@@ -13,8 +15,13 @@ import {
   transitions,
 } from 'Styles/styleGuide';
 
-const { callTimeHeight, cardHeight, groupedCallBubbleSize, archiveButtonSize } =
-  componentSize;
+const {
+  callTimeHeight,
+  cardHeight,
+  groupedCallBubbleSize,
+  archiveButtonSize,
+  loaderSize,
+} = componentSize;
 
 export const Card = styled.div<{
   archived: boolean;
@@ -122,6 +129,24 @@ export const CallTime = styled.div`
   height: ${callTimeHeight}px;
 `;
 
+export const ErrorContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: ${spacing.xSmall};
+`;
+
+export const ErrorMessage = styled.div`
+  color: ${colors.negative};
+  font-size: ${text.smallBody};
+  margin-right: ${spacing.xxSmall};
+`;
+
+export const StyledErrorIcon = styled(ErrorIcon)`
+  color: ${colors.negative};
+`;
+
 export const ArchiveButton = styled.button`
   align-items: center;
   background-color: ${colors.transparent};
@@ -139,6 +164,14 @@ export const ArchiveButton = styled.button`
   &:hover {
     color: ${colors.positive};
   }
+`;
+
+export const StyledCircularProgress = styled(CircularProgress)`
+  color: ${colors.positive} !important;
+  height: ${loaderSize}px !important;
+  margin-left: auto;
+  margin-right: ${spacing.xSmall};
+  width: ${loaderSize}px !important;
 `;
 
 export const GroupedCallsBubble = styled.div<{ callTypeColor: string }>`

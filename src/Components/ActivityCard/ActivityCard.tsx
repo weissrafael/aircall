@@ -35,6 +35,10 @@ import {
   VisibleContent,
   ExpandableContent,
   CallTime,
+  StyledCircularProgress,
+  ErrorContainer,
+  ErrorMessage,
+  StyledErrorIcon,
 } from './styles';
 
 interface Props {
@@ -71,6 +75,8 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
   const [toBeArchived, setToBeArchived] = useState<boolean>(false);
   const [archived, setArchived] = useState<boolean>(false);
   const [expand, setExpand] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const callTypeIcon = getActivityCallTypeIcon(callType, direction);
   const numberOfGroupedCalls =
     groupedCalls.length > 0 ? groupedCalls.length : 1;
@@ -84,6 +90,13 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
       : callType === CallTypeEnum.missed
       ? colors.negative
       : colors.positive;
+
+  const showArchiveError = () => {
+    setError(true);
+    setTimeout(() => {
+      setError(false);
+    }, 3000);
+  };
 
   const startArchiveAnimation = () => {
     setToBeArchived(true);
@@ -141,7 +154,8 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
             )}
           </CallInfo>
         </ActivityInfo>
-        {!disableArchive && (
+        {loading && <StyledCircularProgress />}
+        {!error && !loading && !disableArchive && (
           <ArchiveButton onClick={(e) => archiveActivity(e)}>
             {isArchived ? (
               <UnarchiveIcon style={{ fontSize: '1.7rem' }} />
@@ -149,6 +163,12 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
               <ArchiveIcon style={{ fontSize: '1.7rem' }} />
             )}
           </ArchiveButton>
+        )}
+        {error && !loading && (
+          <ErrorContainer>
+            <ErrorMessage>Something went wrong</ErrorMessage>
+            <StyledErrorIcon />
+          </ErrorContainer>
         )}
       </VisibleContent>
       <ExpandableContent
