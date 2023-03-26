@@ -2,9 +2,10 @@ import PublicIcon from '@mui/icons-material/Public';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import errorImgSrc from 'Assets/Images/error.svg';
 import RoundButton from 'Components/RoundButton/RoundButton';
 import { ErrorHeader, ErrorImage, PageBody } from 'Styles/common.styles';
+
+import { AWSIllustrationsUrl, IllustrationNames } from '../Constants/AWS';
 
 export default function ErrorPage() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function ErrorPage() {
       <RoundButton onClick={refreshPage}>
         Go to home page <PublicIcon style={{ marginLeft: '0.6rem' }} />
       </RoundButton>
-      <ErrorImage src={errorImgSrc} />
+      <ErrorImage src={AWSIllustrationsUrl + IllustrationNames.error} />
     </PageBody>
   );
 }

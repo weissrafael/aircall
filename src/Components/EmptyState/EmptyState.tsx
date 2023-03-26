@@ -1,13 +1,14 @@
 import React from 'react';
 
-import emptyImg from 'Assets/Images/archive-empty.svg';
 import { ErrorHeader, ErrorImage, PageBody } from 'Styles/common.styles';
+
+import { AWSIllustrationsUrl, IllustrationNames } from '../../Constants/AWS';
 
 export default function EmptyState() {
   return (
     <PageBody>
       <ErrorHeader>No calls here!</ErrorHeader>
-      <ErrorImage src={emptyImg} />
+      <ErrorImage src={AWSIllustrationsUrl + IllustrationNames.archiveEmpty} />
     </PageBody>
   );
 }

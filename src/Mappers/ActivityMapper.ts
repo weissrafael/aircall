@@ -60,7 +60,7 @@ const groupActivities = (
   return Object.values(groupedCalls).map(
     ({ groupedCalls, ...call }, index) => ({
       ...call,
-      avatarUrl: index, //should come from API
+      avatarUrl: index + 1, //should come from API
       groupedCalls: groupedCalls?.length ? groupedCalls : [],
     })
   );
