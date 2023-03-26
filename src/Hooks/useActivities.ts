@@ -3,12 +3,15 @@ import { useState, useEffect } from 'react';
 
 import Api from 'API';
 
-import ActivityMapper from '../Mappers/ActivityMapper';
+import ActivityMapper, {
+  filterArchivedActivities,
+} from '../Mappers/ActivityMapper';
+import { filterActivitiesEnum } from '../Models/ActitivityApiResource';
 import { ActivityResource } from '../Models/ActivityResource';
 
 const api = new Api();
 
-const useGetActivities = () => {
+const useGetActivities = (filter: filterActivitiesEnum) => {
   const [activities, setActivities] = useState<ActivityResource[]>([]);
 
   const { isLoading, error, data, isFetching } = useQuery({
@@ -18,20 +21,24 @@ const useGetActivities = () => {
 
   useEffect(() => {
     if (data) {
-      const activitiesFromServer = ActivityMapper(data.data);
-      setActivities(activitiesFromServer);
+      if (filter === filterActivitiesEnum.all) {
+        const activitiesFromServer = ActivityMapper(data.data);
+        setActivities(activitiesFromServer);
+      } else {
+        const { archivedCalls, nonArchivedCalls } = filterArchivedActivities(
+          data.data
+        );
+        const activitiesFromServer = ActivityMapper(
+          filter === filterActivitiesEnum.isArchived
+            ? archivedCalls
+            : nonArchivedCalls
+        );
+        setActivities(activitiesFromServer);
+      }
     }
-  }, [data]);
+  }, [data, filter]);
 
   return { isLoading, error, data: activities, isFetching };
 };
-
-// const useArchiveActivity = () => {
-//   const mutation = useMutation({
-//     queryKey: ['activities'],
-//     queryFn: () => api.getActivities(),
-//   });
-//   return;
-// };
 
 export default { useGetActivities };

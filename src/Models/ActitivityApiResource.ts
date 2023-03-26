@@ -20,3 +20,9 @@ export enum DirectionApiEnum {
   inbound = 'inbound',
   outbound = 'outbound',
 }
+
+export enum filterActivitiesEnum {
+  isArchived = 'isArchived',
+  nonArchived = 'nonArchived',
+  all = 'all',
+}

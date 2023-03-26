@@ -5,64 +5,63 @@ import {
   DirectionEnum,
 } from '../Models/ActivityResource';
 
-interface GroupedActivities {
-  [key: string]: ActivityApiResource[];
-}
-
 export default function activityMapper(
   rawActivities: ActivityApiResource[]
 ): ActivityResource[] {
-  const sortedActivities = sortActivities(rawActivities);
-  const groupedActivities = groupActivities(sortedActivities);
-  return attachActivities(groupedActivities);
+  const formattedActivities = formatActivities(rawActivities);
+  const sortedActivities = sortActivities(formattedActivities);
+  return groupActivities(sortedActivities);
 }
 
-const sortActivities = (unsortedActivities: ActivityApiResource[]) => {
+function formatActivities(
+  activities: ActivityApiResource[]
+): ActivityResource[] {
+  return activities.map((activity) => {
+    return activityApiToFrontResource(activity);
+  });
+}
+
+export function filterArchivedActivities(calls: ActivityApiResource[]) {
+  const nonArchivedCalls: ActivityApiResource[] = calls.filter(
+    (call: ActivityApiResource) => !call.is_archived
+  );
+  const archivedCalls: ActivityApiResource[] = calls.filter(
+    (call: ActivityApiResource) => call.is_archived
+  );
+  return { nonArchivedCalls, archivedCalls };
+}
+
+const sortActivities = (unsortedActivities: ActivityResource[]) => {
   return [...unsortedActivities].sort(
     (activity1, activity2) =>
-      new Date(activity2.created_at).getTime() -
-      new Date(activity1.created_at).getTime()
+      new Date(activity2.createdAt).getTime() -
+      new Date(activity1.createdAt).getTime()
   );
 };
 
 const groupActivities = (
-  activities: ActivityApiResource[]
-): GroupedActivities => {
-  const groupedCalls: GroupedActivities = {};
-  activities.forEach((activity) => {
-    const { created_at } = activity;
-    const [currentDate] = new Date(created_at).toISOString().split('T');
-    if (!(currentDate in groupedCalls)) {
-      groupedCalls[currentDate] = [];
-    }
-    groupedCalls[currentDate].push(activity);
-  });
-  return groupedCalls;
-};
-
-const attachActivities = (groupedActivities: GroupedActivities) => {
-  let finalArray: ActivityResource[] = [];
-  for (const activities of Object.values(groupedActivities)) {
-    const auxArray: ActivityResource[] = [];
-
-    activities.forEach((activity) => {
-      const index = auxArray.findIndex(
-        (item) =>
-          activity.call_type === item.callType?.valueOf() &&
-          activity.from === item.from &&
-          activity.to === item.to &&
-          activity.direction === item.direction?.valueOf()
-      );
-      const frontActivity = activityApiToFrontResource(activity);
-      if (index === -1) {
-        auxArray.push(frontActivity);
+  activities: ActivityResource[]
+): ActivityResource[] => {
+  const groupedCalls: { [key: string]: ActivityResource } = activities.reduce(
+    (groups: { [key: string]: ActivityResource }, call: ActivityResource) => {
+      const key = `${call.createdAt.split('T')[0]}_${call.from}_${
+        call.callType
+      }`;
+      if (!groups[key]) {
+        groups[key] = { ...call, groupedCalls: [] };
       } else {
-        auxArray[index].groupedCalls.push(frontActivity);
+        groups[key].groupedCalls?.push(call);
       }
-    });
-    finalArray = [...finalArray, ...auxArray];
-  }
-  return finalArray;
+      return groups;
+    },
+    {}
+  );
+
+  return Object.values(groupedCalls).map(({ groupedCalls, ...call }) => ({
+    ...call,
+    avatarUrl: Math.floor(Math.random() * 10) + 1, //random number to get random avatar mock image
+    groupedCalls: groupedCalls?.length ? groupedCalls : [],
+  }));
 };
 
 const activityApiToFrontResource = (
