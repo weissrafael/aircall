@@ -13,9 +13,8 @@ export default function Inbox() {
 
   const {
     isLoading,
-    error,
+    isError,
     data: dataFromApi,
-    isFetching,
   } = useActivities.useGetActivities(filterActivitiesEnum.nonArchived);
 
   const openConfirmationModal = () => {

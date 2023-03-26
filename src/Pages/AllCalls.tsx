@@ -8,9 +8,8 @@ import { PageHeader } from 'Styles/common.styles';
 export default function AllCalls() {
   const {
     isLoading,
-    error,
+    isError,
     data: dataFromApi,
-    isFetching,
   } = useActivities.useGetActivities(filterActivitiesEnum.all);
 
   return (

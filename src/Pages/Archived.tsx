@@ -14,9 +14,8 @@ export default function Archived() {
 
   const {
     isLoading,
-    error,
+    isError,
     data: dataFromApi,
-    isFetching,
   } = useActivities.useGetActivities(filterActivitiesEnum.isArchived);
 
   const openConfirmationModal = () => {

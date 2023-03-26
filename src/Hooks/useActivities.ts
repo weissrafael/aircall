@@ -1,33 +1,25 @@
-import { useQuery } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 
-import Api from 'API';
-
+import { useFetchActivities } from 'API/Queries/activity';
 import ActivityMapper, {
   filterArchivedActivities,
-} from '../Mappers/ActivityMapper';
-import { filterActivitiesEnum } from '../Models/ActitivityApiResource';
-import { ActivityResource } from '../Models/ActivityResource';
-
-const api = new Api();
+} from 'Mappers/ActivityMapper';
+import { filterActivitiesEnum } from 'Models/ActitivityApiResource';
+import { ActivityResource } from 'Models/ActivityResource';
 
 const useGetActivities = (filter: filterActivitiesEnum) => {
   const [activities, setActivities] = useState<ActivityResource[]>([]);
 
-  const { isLoading, error, data, isFetching } = useQuery({
-    queryKey: ['activities'],
-    queryFn: () => api.getActivities(),
-  });
+  const { data, isLoading, isError } = useFetchActivities();
 
   useEffect(() => {
     if (data) {
       if (filter === filterActivitiesEnum.all) {
-        const activitiesFromServer = ActivityMapper(data.data);
+        const activitiesFromServer = ActivityMapper(data);
         setActivities(activitiesFromServer);
       } else {
-        const { archivedCalls, nonArchivedCalls } = filterArchivedActivities(
-          data.data
-        );
+        const { archivedCalls, nonArchivedCalls } =
+          filterArchivedActivities(data);
         const activitiesFromServer = ActivityMapper(
           filter === filterActivitiesEnum.isArchived
             ? archivedCalls
@@ -38,7 +30,7 @@ const useGetActivities = (filter: filterActivitiesEnum) => {
     }
   }, [data, filter]);
 
-  return { isLoading, error, data: activities, isFetching };
+  return { isLoading, isError, data: activities };
 };
 
 export default { useGetActivities };
