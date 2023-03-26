@@ -1,9 +1,7 @@
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-
-import QueryClientProvider from 'Providers/QueryClientProvider';
 
 import App from './App';
 import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary';
@@ -12,18 +10,15 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const queryProvider = new QueryClientProvider();
+const queryClient = new QueryClient();
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ErrorBoundary>
-        <PersistQueryClientProvider
-          client={queryProvider.queryClient}
-          persistOptions={{ persister: queryProvider.persister }}
-        >
+        <QueryClientProvider client={queryClient}>
           <App />
-        </PersistQueryClientProvider>
+        </QueryClientProvider>
       </ErrorBoundary>
     </BrowserRouter>
   </React.StrictMode>
