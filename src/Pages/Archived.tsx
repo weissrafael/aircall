@@ -1,10 +1,11 @@
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 
 import Feed from 'Components/Feed/Feed';
 
 import { patchArchiveActivity } from '../API/Mutations/activity';
+import { QueryKeys } from '../API/QueryKeys';
 import ConfirmModal from '../Components/ConfirmModal/ConfirmModal';
 import RoundButton from '../Components/RoundButton/RoundButton';
 import useActivities from '../Hooks/useActivities';
@@ -24,12 +25,26 @@ export default function Archived() {
   const openConfirmationModal = () => {
     setModalIsOpen(true);
   };
+  const queryClient = useQueryClient();
 
-  const mutateUnarchiveAllActivity = useMutation(async () => {
-    rawArchivedActivitiesList.forEach((activity) => {
-      patchArchiveActivity({ is_archived: !activity.is_archived }, activity.id);
-    });
-  });
+  const mutateUnarchiveAllActivity = useMutation(
+    async () => {
+      rawArchivedActivitiesList.forEach((activity) => {
+        patchArchiveActivity(
+          { is_archived: !activity.is_archived },
+          activity.id
+        );
+      });
+    },
+    {
+      onSettled: async () => {
+        await queryClient.invalidateQueries([QueryKeys.activityList]);
+        setTimeout(() => {
+          setModalIsOpen(false);
+        }, 2000);
+      },
+    }
+  );
 
   return (
     <>
@@ -46,6 +61,9 @@ export default function Archived() {
         isOpen={modalIsOpen}
         message="Are you sure you want to unarchive all calls?"
         onClick={mutateUnarchiveAllActivity.mutate}
+        isLoading={mutateUnarchiveAllActivity.isLoading}
+        isError={mutateUnarchiveAllActivity.isError}
+        isSuccess={mutateUnarchiveAllActivity.isSuccess}
       />
     </>
   );

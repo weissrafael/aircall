@@ -34,6 +34,7 @@ export const ContentBox = styled.div`
   border-radius: ${borderRadius.modal};
   display: flex;
   flex-direction: column;
+  height: 150px;
   justify-content: space-between;
   max-width: ${contentBoxMaxWidth}px;
   padding: ${spacing.small} ${spacing.medium};
@@ -42,9 +43,9 @@ export const ContentBox = styled.div`
 `;
 
 export const ModalHeader = styled.div`
-  align-items: flex-start;
+  align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: ${spacing.small};
   width: 100%;
 `;

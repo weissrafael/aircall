@@ -21,6 +21,7 @@ import {
   CallTypeEnum,
   DirectionEnum,
 } from 'Models/ActivityResource';
+import { StyledCircularProgress } from 'Styles/common.styles';
 import { colors } from 'Styles/styleGuide';
 import { getActivityCallTypeIcon, getDurationInfo } from 'Utils/activity';
 
@@ -37,7 +38,6 @@ import {
   VisibleContent,
   ExpandableContent,
   CallTime,
-  StyledCircularProgress,
   ErrorContainer,
   ErrorMessage,
   StyledErrorIcon,

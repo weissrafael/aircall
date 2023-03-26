@@ -12,16 +12,6 @@ export const colors = {
   transparent: 'transparent',
 
   white: '#fff',
-  whiteTransparent: 'rgba(255,255,255,0.5)',
-
-  black: '#000',
-  blackTransparent: 'rgba(0,0,0,0.9)',
-
-  blue: '#4567e9',
-  blue2: '#404b5a',
-  blue3: '#243245',
-  blue4: '#1e2b3d',
-  blue5: '#16202e',
 
   gray0: '#F7F7F7',
   gray1: '#f1f2f6',
@@ -117,6 +107,7 @@ export const componentSize = {
   cardHeight: 74,
   archiveButtonSize: 40,
   loaderSize: 26,
+  modalLoaderSize: 46,
   groupedCallBubbleSize: 20,
   actionsContainerHeight: 50,
   contentBoxMaxWidth: 250,
