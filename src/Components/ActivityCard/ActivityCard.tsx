@@ -111,12 +111,25 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
   const archiveActivity = (e: React.MouseEvent<HTMLButtonElement>) => {
     //stop propagation to prevent card from expanding
     e.stopPropagation();
-    mutateArchiveActivity.mutate();
+    if (groupedCalls.length > 0) {
+      groupedCalls.forEach((call) => {
+        mutateArchiveActivity.mutate({
+          isArchived: call.isArchived,
+          id: call.id,
+        });
+      });
+    }
+    mutateArchiveActivity.mutate({ isArchived, id });
   };
   const formattedDate = moment(createdAt).format('MMM Do');
 
+  interface Props {
+    isArchived: boolean;
+    id: string;
+  }
+
   const mutateArchiveActivity = useMutation(
-    async () => {
+    async ({ isArchived, id }: Props) => {
       await patchArchiveActivity({ is_archived: !isArchived }, id);
     },
     {

@@ -11,9 +11,12 @@ import { PageHeader } from 'Styles/common.styles';
 
 import { patchArchiveActivity } from '../API/Mutations/activity';
 import { QueryKeys } from '../API/QueryKeys';
+import SkeletonFeed from '../Components/SkeletonFeed/Feed';
 
 export default function Inbox() {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [loading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const {
     isLoading,
@@ -28,24 +31,33 @@ export default function Inbox() {
 
   const queryClient = useQueryClient();
 
-  const mutateArchiveAllActivity = useMutation(
-    async () => {
-      rawUnarchivedActivitiesList.forEach((activity) => {
-        patchArchiveActivity(
-          { is_archived: !activity.is_archived },
-          activity.id
-        );
-      });
-    },
-    {
-      onSettled: async () => {
-        await queryClient.invalidateQueries([QueryKeys.activityList]);
-        setTimeout(() => {
-          setModalIsOpen(false);
-        }, 2000);
-      },
+  interface Props {
+    isArchived: boolean;
+    id: string;
+  }
+
+  const mutateArchiveActivity = useMutation(
+    async ({ isArchived, id }: Props) => {
+      await patchArchiveActivity({ is_archived: !isArchived }, id);
     }
   );
+
+  const archiveAll = async () => {
+    setIsLoading(true);
+    await rawUnarchivedActivitiesList.forEach((activity) => {
+      mutateArchiveActivity.mutate({
+        isArchived: activity.is_archived,
+        id: activity.id,
+      });
+    });
+    await queryClient.invalidateQueries([QueryKeys.activityList]);
+    setIsLoading(false);
+    setIsSuccess(true);
+    setTimeout(() => {
+      setIsSuccess(false);
+      setModalIsOpen(false);
+    }, 1300);
+  };
 
   return (
     <>
@@ -56,15 +68,18 @@ export default function Inbox() {
           <ArchiveIcon style={{ marginLeft: 8 }} />
         </RoundButton>
       </PageHeader>
-      <Feed data={dataFromApi} />
+      {isLoading && <SkeletonFeed />}
+      {/*{isError && !isLoading && <ErrorState />}*/}
+      {/*{!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}*/}
+      {!isError && !isLoading && <Feed data={dataFromApi} />}
       <ConfirmModal
         closeModal={() => setModalIsOpen(false)}
         isOpen={modalIsOpen}
         message={'Are you sure you want to archive all calls?'}
-        onClick={mutateArchiveAllActivity.mutate}
-        isLoading={mutateArchiveAllActivity.isLoading}
-        isError={mutateArchiveAllActivity.isError}
-        isSuccess={mutateArchiveAllActivity.isSuccess}
+        onClick={archiveAll}
+        isLoading={loading}
+        isError={false}
+        isSuccess={isSuccess}
       />
     </>
   );
