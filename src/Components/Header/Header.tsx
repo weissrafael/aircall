@@ -15,7 +15,7 @@ import {
   TopRightTabButton,
 } from './styles';
 
-export default function Header() {
+function Header() {
   const [activeTab, setActiveTab] = useState<TabsEnum | null>(null);
   const location = useLocation();
 
@@ -120,3 +120,5 @@ export default function Header() {
     </header>
   );
 }
+
+export default React.memo(Header);

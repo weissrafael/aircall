@@ -7,7 +7,7 @@ import { ErrorHeader, ErrorImage, PageBody } from 'Styles/common.styles';
 
 import { AWSIllustrationsUrl, IllustrationNames } from '../Constants/AWS';
 
-export default function NotFound() {
+function NotFound() {
   const navigate = useNavigate();
 
   return (
@@ -20,3 +20,5 @@ export default function NotFound() {
     </PageBody>
   );
 }
+
+export default React.memo(NotFound);

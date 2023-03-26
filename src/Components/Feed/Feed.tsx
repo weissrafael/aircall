@@ -10,7 +10,7 @@ interface Props {
   disableArchive?: boolean;
 }
 
-export default function Feed({ data, disableArchive }: Props) {
+function Feed({ data, disableArchive }: Props) {
   return (
     <ActivitiesList>
       {data.map((item) => (
@@ -23,3 +23,5 @@ export default function Feed({ data, disableArchive }: Props) {
     </ActivitiesList>
   );
 }
+
+export default React.memo(Feed);

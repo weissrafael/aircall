@@ -5,7 +5,7 @@ import useActivities from 'Hooks/useActivities';
 import { filterActivitiesEnum } from 'Models/ActitivityApiResource';
 import { PageHeader } from 'Styles/common.styles';
 
-export default function AllCalls() {
+function AllCalls() {
   const {
     isLoading,
     isError,
@@ -21,3 +21,5 @@ export default function AllCalls() {
     </>
   );
 }
+
+export default React.memo(AllCalls);

@@ -14,7 +14,7 @@ import { PageHeader } from 'Styles/common.styles';
 
 import EmptyState from '../Components/EmptyState/EmptyState';
 
-export default function Archived() {
+function Archived() {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -89,3 +89,5 @@ export default function Archived() {
     </>
   );
 }
+
+export default React.memo(Archived);

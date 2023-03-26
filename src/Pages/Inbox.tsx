@@ -13,7 +13,7 @@ import { patchArchiveActivity } from '../API/Mutations/activity';
 import { QueryKeys } from '../API/QueryKeys';
 import SkeletonFeed from '../Components/SkeletonFeed/Feed';
 
-export default function Inbox() {
+function Inbox() {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -86,3 +86,5 @@ export default function Inbox() {
     </>
   );
 }
+
+export default React.memo(Inbox);

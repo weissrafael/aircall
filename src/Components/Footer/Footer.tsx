@@ -15,7 +15,7 @@ import {
   RightActions,
 } from './styles';
 
-const Footer = () => {
+function Footer() {
   const mockNumberOfCalls = 7;
 
   return (
@@ -44,6 +44,6 @@ const Footer = () => {
       </FooterContainer>
     </footer>
   );
-};
+}
 
-export default Footer;
+export default React.memo(Footer);
