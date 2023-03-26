@@ -23,7 +23,7 @@ const Footer = () => {
       <FooterContainer>
         <ScreenLimiter>
           <LeftActions>
-            <TabButton to="/" active={true}>
+            <TabButton to="/" $active={true}>
               <LocalPhoneIcon />
               <NotificationBubble>{mockNumberOfCalls}</NotificationBubble>
             </TabButton>

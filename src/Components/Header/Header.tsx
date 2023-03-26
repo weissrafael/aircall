@@ -94,21 +94,21 @@ export default function Header() {
           </SiteLogo>
           <NavigationTabs>
             <TopRightTabButton
-              active={activeTab === TabsEnum.inbox}
+              $active={activeTab === TabsEnum.inbox}
               onClick={() => setActiveTab(TabsEnum.inbox)}
               to="/"
             >
               <InboxIcon />
             </TopRightTabButton>
             <TopRightTabButton
-              active={activeTab === TabsEnum.archived}
+              $active={activeTab === TabsEnum.archived}
               onClick={() => setActiveTab(TabsEnum.archived)}
               to="/archived"
             >
               <ArchiveIcon />
             </TopRightTabButton>
             <TopRightTabButton
-              active={activeTab === TabsEnum.allCalls}
+              $active={activeTab === TabsEnum.allCalls}
               onClick={() => setActiveTab(TabsEnum.allCalls)}
               to="/all-calls"
             >

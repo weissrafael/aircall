@@ -1,8 +1,10 @@
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
+import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 
 import Feed from 'Components/Feed/Feed';
 
+import { patchArchiveActivity } from '../API/Mutations/activity';
 import ConfirmModal from '../Components/ConfirmModal/ConfirmModal';
 import RoundButton from '../Components/RoundButton/RoundButton';
 import useActivities from '../Hooks/useActivities';
@@ -16,11 +18,18 @@ export default function Archived() {
     isLoading,
     isError,
     data: dataFromApi,
+    rawArchivedActivitiesList,
   } = useActivities.useGetActivities(filterActivitiesEnum.isArchived);
 
   const openConfirmationModal = () => {
     setModalIsOpen(true);
   };
+
+  const mutateUnarchiveAllActivity = useMutation(async () => {
+    rawArchivedActivitiesList.forEach((activity) => {
+      patchArchiveActivity({ is_archived: !activity.is_archived }, activity.id);
+    });
+  });
 
   return (
     <>
@@ -36,6 +45,7 @@ export default function Archived() {
         closeModal={() => setModalIsOpen(false)}
         isOpen={modalIsOpen}
         message="Are you sure you want to unarchive all calls?"
+        onClick={mutateUnarchiveAllActivity.mutate}
       />
     </>
   );

@@ -53,10 +53,10 @@ export const NavigationTabs = styled.div`
 `;
 
 export const TopRightTabButton = styled(TabButton)`
-  ${({ active }) => css`
+  ${({ $active }) => css`
     align-items: center;
     border-bottom: ${borderType.activeTab}
-      ${active ? colors.positive : colors.transparent};
+      ${$active ? colors.positive : colors.transparent};
     border-top: none;
     margin-left: ${spacing.small};
     margin-right: 0;

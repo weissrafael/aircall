@@ -48,7 +48,7 @@ export const ErrorImage = styled.img`
 `;
 
 interface TabButtonProps {
-  active?: boolean;
+  $active?: boolean;
 }
 
 export const TabButton = styled(Link)<TabButtonProps>`
@@ -56,7 +56,7 @@ export const TabButton = styled(Link)<TabButtonProps>`
   background-color: transparent;
   border: none;
   border-top: 3px solid
-    ${(props) => (props.active ? colors.positive : colors.transparent)};
+    ${(props) => (props.$active ? colors.positive : colors.transparent)};
   color: ${colors.gray10};
   cursor: pointer;
   display: flex;
