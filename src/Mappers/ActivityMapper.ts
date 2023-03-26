@@ -57,11 +57,13 @@ const groupActivities = (
     {}
   );
 
-  return Object.values(groupedCalls).map(({ groupedCalls, ...call }) => ({
-    ...call,
-    avatarUrl: Math.floor(Math.random() * 10) + 1, //random number to get random avatar mock image
-    groupedCalls: groupedCalls?.length ? groupedCalls : [],
-  }));
+  return Object.values(groupedCalls).map(
+    ({ groupedCalls, ...call }, index) => ({
+      ...call,
+      avatarUrl: index, //should come from API
+      groupedCalls: groupedCalls?.length ? groupedCalls : [],
+    })
+  );
 };
 
 const activityApiToFrontResource = (
