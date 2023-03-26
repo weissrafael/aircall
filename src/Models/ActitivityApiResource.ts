@@ -1,5 +1,5 @@
 export interface ActivityApiResource {
-  id: number;
+  id: string;
   created_at: string;
   direction: DirectionApiEnum;
   from: string;

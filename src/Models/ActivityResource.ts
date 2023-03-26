@@ -1,5 +1,5 @@
 export interface ActivityResource {
-  id: number;
+  id: string;
   createdAt: string;
   direction?: DirectionEnum;
   from: string;
