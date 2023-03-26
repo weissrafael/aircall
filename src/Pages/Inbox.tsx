@@ -11,6 +11,7 @@ import { PageHeader } from 'Styles/common.styles';
 
 import { patchArchiveActivity } from '../API/Mutations/activity';
 import { QueryKeys } from '../API/QueryKeys';
+import EmptyState from '../Components/EmptyState/EmptyState';
 import SkeletonFeed from '../Components/SkeletonFeed/Feed';
 
 function Inbox() {
@@ -72,7 +73,7 @@ function Inbox() {
       </PageHeader>
       {isLoading && <SkeletonFeed />}
       {/*{isError && !isLoading && <ErrorState />}*/}
-      {/*{!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}*/}
+      {!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}
       {!isError && !isLoading && <Feed data={dataFromApi} />}
       <ConfirmModal
         closeModal={() => setModalIsOpen(false)}
