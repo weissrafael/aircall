@@ -47,6 +47,10 @@ export const ScreenLimiter = styled.div`
 export const ErrorImage = styled.img`
   margin-top: ${spacing.large};
   width: 18rem;
+  @media (min-width: ${screens.medium}px) {
+    margin-top: ${spacing.small};
+    width: 15rem;
+  }
 `;
 
 interface TabButtonProps {

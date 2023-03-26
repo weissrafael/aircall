@@ -12,6 +12,8 @@ import useActivities from 'Hooks/useActivities';
 import { filterActivitiesEnum } from 'Models/ActitivityApiResource';
 import { PageHeader } from 'Styles/common.styles';
 
+import EmptyState from '../Components/EmptyState/EmptyState';
+
 export default function Archived() {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [loading, setIsLoading] = useState<boolean>(false);
@@ -60,16 +62,18 @@ export default function Archived() {
 
   return (
     <>
-      <PageHeader>
-        <h1>Archived</h1>
-        <RoundButton onClick={openConfirmationModal}>
-          Unarchive All
-          <UnarchiveIcon style={{ marginLeft: 8 }} />
-        </RoundButton>
-      </PageHeader>
+      {!isError && !isLoading && dataFromApi.length > 0 && (
+        <PageHeader>
+          <h1>Archived</h1>
+          <RoundButton onClick={openConfirmationModal}>
+            Unarchive All
+            <UnarchiveIcon style={{ marginLeft: 8 }} />
+          </RoundButton>
+        </PageHeader>
+      )}
+      {!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}
       {isLoading && <SkeletonFeed />}
       {/*{isError && !isLoading && <ErrorState />}*/}
-      {/*{!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}*/}
       {!isError && !isLoading && <Feed data={dataFromApi} />}
       <ConfirmModal
         closeModal={() => setModalIsOpen(false)}
