@@ -5,10 +5,16 @@ import { QueryKeys } from 'API/QueryKeys';
 import { ActivityApiResource } from 'Models/ActitivityApiResource';
 
 export const useFetchActivities = () => {
-  return useQuery([QueryKeys.activityList], async () => {
-    const response = await axiosRequest.get<ActivityApiResource[]>(
-      `/activities`
-    );
-    return response.data;
-  });
+  return useQuery(
+    [QueryKeys.activityList],
+    async () => {
+      const response = await axiosRequest.get<ActivityApiResource[]>(
+        `/activities`
+      );
+      return response.data;
+    },
+    {
+      enabled: true,
+    }
+  );
 };

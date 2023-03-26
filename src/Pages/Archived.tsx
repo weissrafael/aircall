@@ -49,6 +49,7 @@ export default function Archived() {
       });
     });
     await queryClient.invalidateQueries([QueryKeys.activityList]);
+    mutateArchiveActivity.reset();
     setIsLoading(false);
     setIsSuccess(true);
     setTimeout(() => {
