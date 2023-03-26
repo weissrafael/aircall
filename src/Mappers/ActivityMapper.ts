@@ -89,5 +89,6 @@ const activityApiToFrontResource = (
     isArchived,
     callType: call_type ? CallTypeEnum[activity.call_type] : undefined,
     groupedCalls: [],
+    avatarUrl: 0,
   };
 };

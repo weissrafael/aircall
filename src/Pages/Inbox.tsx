@@ -4,10 +4,9 @@ import React, { useState } from 'react';
 import ConfirmModal from 'Components/ConfirmModal/ConfirmModal';
 import Feed from 'Components/Feed/Feed';
 import RoundButton from 'Components/RoundButton/RoundButton';
+import useActivities from 'Hooks/useActivities';
+import { filterActivitiesEnum } from 'Models/ActitivityApiResource';
 import { PageHeader } from 'Styles/common.styles';
-
-import useActivities from '../Hooks/useActivities';
-import { filterActivitiesEnum } from '../Models/ActitivityApiResource';
 
 export default function Inbox() {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);

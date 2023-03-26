@@ -67,9 +67,9 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
     to,
     duration,
     callType,
-    id,
     isArchived,
     groupedCalls,
+    avatarUrl,
     createdAt,
   } = activity;
   const [toBeArchived, setToBeArchived] = useState<boolean>(false);
@@ -84,12 +84,13 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
     numberOfGroupedCalls > 1
       ? numberOfGroupedCalls + ' calls '
       : getDurationInfo(duration);
-  const callTypeColor =
-    callType === CallTypeEnum.voicemail
-      ? colors.orange
-      : callType === CallTypeEnum.missed
-      ? colors.negative
-      : colors.positive;
+  const callTypeColor = !callType
+    ? colors.gray7
+    : callType === CallTypeEnum.voicemail
+    ? colors.orange
+    : callType === CallTypeEnum.missed
+    ? colors.negative
+    : colors.positive;
 
   const showArchiveError = () => {
     setError(true);
@@ -110,6 +111,7 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
     e.stopPropagation();
     startArchiveAnimation();
   };
+  const formattedDate = moment(createdAt).format('MMM Do');
 
   return (
     <Card
@@ -120,10 +122,12 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
       numberOfChildren={numberOfGroupedCalls || 1}
     >
       <VisibleContent>
-        <ContactAvatar src={users[id]} />
+        <ContactAvatar src={users[avatarUrl]} />
         <ActivityInfo>
           <PhoneNumber>
-            {direction === DirectionEnum.outbound ? from : to}
+            {direction === DirectionEnum.outbound
+              ? from || 'Unknown'
+              : to || 'Unknown'}
             {numberOfGroupedCalls > 1 && (
               <GroupedCallsBubble callTypeColor={callTypeColor}>
                 {numberOfGroupedCalls}
@@ -132,16 +136,22 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
           </PhoneNumber>
           <CallInfo>
             <CallType>{callTypeIcon}</CallType>
+            {!callType && (
+              <CallDuration>
+                {durationInfo}
+                {createdAt && 'on ' + formattedDate}
+              </CallDuration>
+            )}
             {callType === CallTypeEnum.answered && (
               <CallDuration>
-                {durationInfo} on {moment(activity.createdAt).format('MMM Do')}
+                {durationInfo} on {formattedDate}
               </CallDuration>
             )}
             {callType === CallTypeEnum.voicemail && (
               <CallDuration>
                 left {numberOfGroupedCalls > 1 ? numberOfGroupedCalls : 'a'}{' '}
                 voicemail{numberOfGroupedCalls > 1 ? 's' : ''} on{' '}
-                {moment(activity.createdAt).format('MMM Do')}
+                {formattedDate}
               </CallDuration>
             )}
             {callType === CallTypeEnum.missed && (
@@ -149,7 +159,7 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
                 {numberOfGroupedCalls > 1
                   ? numberOfGroupedCalls + ' calls'
                   : ''}{' '}
-                missed on {moment(activity.createdAt).format('MMM Do')}
+                missed on {formattedDate}
               </CallDuration>
             )}
           </CallInfo>
@@ -181,13 +191,13 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
             const durationInfo = getDurationInfo(duration);
             return (
               <CallTime key={id}>
-                at {moment(createdAt).format('hh:mm a')} • last for{' '}
-                {durationInfo}
+                at {moment(createdAt).format('hh:mm a')}
+                {durationInfo !== ' - ' && ' for ' + durationInfo}
               </CallTime>
             );
           })
         ) : (
-          <CallTime key={id}>at {moment(createdAt).format('hh:mm a')}</CallTime>
+          <CallTime>at {moment(createdAt).format('hh:mm a')}</CallTime>
         )}
       </ExpandableContent>
     </Card>

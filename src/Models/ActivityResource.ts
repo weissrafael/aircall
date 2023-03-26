@@ -9,6 +9,7 @@ export interface ActivityResource {
   isArchived: boolean;
   callType?: CallTypeEnum;
   groupedCalls: ActivityResource[];
+  avatarUrl: number;
 }
 
 export interface GroupedCallResource {
