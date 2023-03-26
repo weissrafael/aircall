@@ -7,6 +7,8 @@ import RoundButton from 'Components/RoundButton/RoundButton';
 import { ActivityResource } from 'Models/ActivityResource';
 import { PageHeader } from 'Styles/common.styles';
 
+import useActivities from '../Hooks/useActivities';
+
 const data = [
   {
     id: 1,
@@ -167,6 +169,13 @@ const data = [
 export default function Inbox() {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
+  const {
+    isLoading,
+    error,
+    data: dataFromApi,
+    isFetching,
+  } = useActivities.useGetActivities();
+
   const openConfirmationModal = () => {
     setModalIsOpen(true);
   };
@@ -180,7 +189,7 @@ export default function Inbox() {
           <ArchiveIcon style={{ marginLeft: 8 }} />
         </RoundButton>
       </PageHeader>
-      <Feed data={data} />
+      <Feed data={dataFromApi} />
       <ConfirmModal
         closeModal={() => setModalIsOpen(false)}
         isOpen={modalIsOpen}

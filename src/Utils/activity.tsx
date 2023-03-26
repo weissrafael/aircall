@@ -10,8 +10,8 @@ import { CallTypeEnum, DirectionEnum } from 'Models/ActivityResource';
 import { colors } from '../Styles/styleGuide';
 
 export function getActivityCallTypeIcon(
-  callType: CallTypeEnum,
-  direction: DirectionEnum
+  direction?: DirectionEnum,
+  callType?: CallTypeEnum
 ): React.ReactElement {
   let callTypeIcon = <></>;
   if (direction === DirectionEnum.inbound) {

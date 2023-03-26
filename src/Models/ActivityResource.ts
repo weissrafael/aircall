@@ -1,14 +1,14 @@
 export interface ActivityResource {
   id: number;
   createdAt: string;
-  direction: DirectionEnum;
+  direction?: DirectionEnum;
   from: string;
   to: string;
   via: string;
   duration: number;
   isArchived: boolean;
-  callType: CallTypeEnum;
-  groupedCalls: GroupedCallResource[];
+  callType?: CallTypeEnum;
+  groupedCalls: ActivityResource[];
 }
 
 export interface GroupedCallResource {

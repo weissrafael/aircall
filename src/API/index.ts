@@ -1,11 +1,16 @@
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 
 export default class Api {
-  api: AxiosInstance;
+  api: any;
 
   constructor() {
     this.api = axios.create({
-      baseURL: process.env.API_URL,
+      baseURL: process.env.REACT_APP_API_URL,
+      withCredentials: false,
     });
+  }
+
+  async getActivities() {
+    return this.api.get('/activities');
   }
 }
