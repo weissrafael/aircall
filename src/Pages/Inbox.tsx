@@ -23,6 +23,7 @@ export default function Inbox() {
     isError,
     data: dataFromApi,
     rawUnarchivedActivitiesList,
+    refetch,
   } = useActivities.useGetActivities(filterActivitiesEnum.nonArchived);
 
   const openConfirmationModal = () => {
@@ -51,6 +52,7 @@ export default function Inbox() {
       });
     });
     await queryClient.invalidateQueries([QueryKeys.activityList]);
+    await refetch();
     setIsLoading(false);
     setIsSuccess(true);
     setTimeout(() => {

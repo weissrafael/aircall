@@ -24,6 +24,7 @@ export default function Archived() {
     isError,
     data: dataFromApi,
     rawArchivedActivitiesList,
+    refetch,
   } = useActivities.useGetActivities(filterActivitiesEnum.isArchived);
 
   const openConfirmationModal = () => {
@@ -51,6 +52,7 @@ export default function Archived() {
       });
     });
     await queryClient.invalidateQueries([QueryKeys.activityList]);
+    await refetch();
     mutateArchiveActivity.reset();
     setIsLoading(false);
     setIsSuccess(true);
