@@ -1,8 +1,10 @@
 import ArchiveIcon from '@mui/icons-material/Archive';
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
+import { useMutation } from '@tanstack/react-query';
 import moment from 'moment';
 import React, { useState } from 'react';
 
+import { patchArchiveActivity } from 'API/Mutations/activity';
 import user1 from 'Assets/Images/mock-user-avatars/user1.png';
 import user10 from 'Assets/Images/mock-user-avatars/user10.png';
 import user11 from 'Assets/Images/mock-user-avatars/user11.png';
@@ -71,11 +73,11 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
     groupedCalls,
     avatarUrl,
     createdAt,
+    id,
   } = activity;
   const [toBeArchived, setToBeArchived] = useState<boolean>(false);
   const [archived, setArchived] = useState<boolean>(false);
   const [expand, setExpand] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const callTypeIcon = getActivityCallTypeIcon(direction, callType);
   const numberOfGroupedCalls =
@@ -109,9 +111,23 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
   const archiveActivity = (e: React.MouseEvent<HTMLButtonElement>) => {
     //stop propagation to prevent card from expanding
     e.stopPropagation();
-    startArchiveAnimation();
+    mutateArchiveActivity.mutate();
   };
   const formattedDate = moment(createdAt).format('MMM Do');
+
+  const mutateArchiveActivity = useMutation(
+    async () => {
+      await patchArchiveActivity({ is_archived: !isArchived }, id);
+    },
+    {
+      onSuccess: () => {
+        startArchiveAnimation();
+      },
+      onError: () => {
+        showArchiveError();
+      },
+    }
+  );
 
   return (
     <Card
@@ -164,8 +180,8 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
             )}
           </CallInfo>
         </ActivityInfo>
-        {loading && <StyledCircularProgress />}
-        {!error && !loading && !disableArchive && (
+        {mutateArchiveActivity.isLoading && <StyledCircularProgress />}
+        {!error && !mutateArchiveActivity.isLoading && !disableArchive && (
           <ArchiveButton onClick={(e) => archiveActivity(e)}>
             {isArchived ? (
               <UnarchiveIcon style={{ fontSize: '1.7rem' }} />
@@ -174,7 +190,7 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
             )}
           </ArchiveButton>
         )}
-        {error && !loading && (
+        {error && !mutateArchiveActivity.isLoading && (
           <ErrorContainer>
             <ErrorMessage>Something went wrong</ErrorMessage>
             <StyledErrorIcon />
