@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL:
-    'https://charming-bat-singlet.cyclic.app/https://cerulean-marlin-wig.cyclic.app/',
+  baseURL: process.env.REACT_APP_API_URL,
   withCredentials: false,
   headers: {
     Accept: 'application/json',
