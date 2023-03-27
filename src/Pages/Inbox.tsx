@@ -46,7 +46,7 @@ function Inbox() {
       {isFetching && <SkeletonFeed />}
       {/*{isError && !isLoading && <ErrorState />}*/}
       {!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}
-      {!isError && !isLoading && <Feed data={dataFromApi} />}
+      {!isError && !isLoading && !isFetching && <Feed data={dataFromApi} />}
       <ConfirmModal
         closeModal={closeConfirmationModal}
         isOpen={modalIsOpen}
