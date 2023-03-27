@@ -22,8 +22,7 @@ function AllCalls() {
       {isLoading && <SkeletonFeed />}
       {/*{isError && !isLoading && <ErrorState />}*/}
       {!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}
-      {!isError && !isLoading && <Feed data={dataFromApi} />}
-      <Feed data={dataFromApi} disableArchive />
+      {!isError && !isLoading && <Feed data={dataFromApi} disableArchive />}
     </>
   );
 }
