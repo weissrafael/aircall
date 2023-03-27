@@ -113,4 +113,6 @@ export const componentSize = {
   contentBoxMaxWidth: 250,
   footerHeight: 60,
   notificationBubbleSize: 18,
+  siteLogoWidthMobile: 130,
+  siteLogoWidthDesktop: 170,
 };

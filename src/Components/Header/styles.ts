@@ -4,16 +4,19 @@ import { TabButton } from 'Styles/common.styles';
 import {
   borderType,
   colors,
+  componentSize,
   layerOrder,
   screens,
   shadows,
   spacing,
 } from 'Styles/styleGuide';
 
-const headerHeightMobile = 60;
-const headerHeightDesktop = 80;
-const siteLogoWidthMobile = 130;
-const siteLogoWidthDesktop = 170;
+const {
+  headerHeightMobile,
+  headerHeightDesktop,
+  siteLogoWidthMobile,
+  siteLogoWidthDesktop,
+} = componentSize;
 
 export const HeaderContainer = styled.nav`
   align-items: center;

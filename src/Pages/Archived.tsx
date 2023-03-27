@@ -37,7 +37,7 @@ function Archived() {
 
   return (
     <>
-      {!isError && !isLoading && dataFromApi.length > 0 && (
+      {!isError && !isLoading && !isFetching && dataFromApi.length > 0 && (
         <PageHeader>
           <h1>Archived</h1>
           <RoundButton onClick={openConfirmationModal}>
@@ -46,7 +46,7 @@ function Archived() {
           </RoundButton>
         </PageHeader>
       )}
-      {(isLoading || isFetching) && <SkeletonFeed />}
+      {isFetching && <SkeletonFeed />}
       {/*{isError && !isLoading && <ErrorState />}*/}
       {!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}
       {!isError && !isLoading && <Feed data={dataFromApi} />}

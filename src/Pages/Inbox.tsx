@@ -43,7 +43,7 @@ function Inbox() {
           </RoundButton>
         </PageHeader>
       )}
-      {(isLoading || isFetching) && <SkeletonFeed />}
+      {isFetching && <SkeletonFeed />}
       {/*{isError && !isLoading && <ErrorState />}*/}
       {!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}
       {!isError && !isLoading && <Feed data={dataFromApi} />}
