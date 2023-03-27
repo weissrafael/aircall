@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# Frontend Assessment for Podopolo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the Podopolo Phone Call App Frontend Assessment repository!
+
+This repository contains the frontend code for the Aircall app, developed as part of a technical assessment for Podopolo, a company that creates innovative solutions to help people connect, communicate, and collaborate.
+## Installation
+
+In order to run the app locally, you need to have [Node.js](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/) installed on your machine.
+Then you will need to install the dependencies by running the following command in the project directory:
+### `yarn install`
 
 ## Available Scripts
 
@@ -19,28 +26,34 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## App Features
+- [x] User can see a list of all activities
+- [x] User can Archive or Unarchive a single activity
+- [x] User can Archive or Unarchive all activities at ounce
+- [x] User can see a list of all archived activities
+- [x] User can see a list of all unarchived activities
+- [x] The activities are sorted by date
+- [x] Activities are grouped together if they are from the same person, at the same day and with the same results
+- [x] The App is full responsive and works on mobile, tablet and desktop
+- [x] Core functions are tested
+- [x] Custom Hooks for improved architecture
+- [x] Mobile first oriented
+- [x] O(n) solution for grouping activities
+- [x] Improved user experience with nice transitions
+- [x] All animations made with CSS (no libraries)
+- [x] The App is deployed on Heroku
+- [x] Error handling with Error Boundary
+- [x] Error page, 404 page, empty list page
+- [x] All images stored on AWS with american CDN
+- [x] CSS Styleguide with BEM methodology and no magic numbers
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Libraries used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [React](https://reactjs.org/)
+- [React Router](https://reactrouter.com/)
+- [Material UI](https://material-ui.com/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [React Query](https://react-query.tanstack.com/)
+- [Styled Components](https://styled-components.com/)
+- [Moment](https://momentjs.com/)
+- [Typescript](https://www.typescriptlang.org/)
