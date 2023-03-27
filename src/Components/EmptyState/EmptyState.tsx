@@ -1,8 +1,7 @@
 import React from 'react';
 
+import { AWSIllustrationsUrl, IllustrationNames } from 'Constants/AWS';
 import { ErrorHeader, ErrorImage, PageBody } from 'Styles/common.styles';
-
-import { AWSIllustrationsUrl, IllustrationNames } from '../../Constants/AWS';
 
 export default function EmptyState() {
   return (

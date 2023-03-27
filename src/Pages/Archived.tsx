@@ -2,19 +2,18 @@ import UnarchiveIcon from '@mui/icons-material/Unarchive';
 import React from 'react';
 
 import ConfirmModal from 'Components/ConfirmModal/ConfirmModal';
+import EmptyState from 'Components/EmptyState/EmptyState';
 import Feed from 'Components/Feed/Feed';
 import RoundButton from 'Components/RoundButton/RoundButton';
 import SkeletonFeed from 'Components/SkeletonFeed/Feed';
 import useActivities from 'Hooks/useActivities';
+import useArchiveAll from 'Hooks/useArchiveAll';
+import useModal from 'Hooks/useModal';
 import {
   ArchiveType,
   FilterActivitiesEnum,
 } from 'Models/ActitivityApiResource';
 import { PageHeader } from 'Styles/common.styles';
-
-import EmptyState from '../Components/EmptyState/EmptyState';
-import useArchiveAll from '../Hooks/useArchiveAll';
-import useModal from '../Hooks/useModal';
 
 function Archived() {
   const { openConfirmationModal, closeConfirmationModal, modalIsOpen } =
@@ -24,6 +23,7 @@ function Archived() {
     isLoading,
     isError,
     data: dataFromApi,
+    isFetching,
   } = useActivities.useGetActivities(FilterActivitiesEnum.isArchived);
 
   const {
@@ -46,9 +46,9 @@ function Archived() {
           </RoundButton>
         </PageHeader>
       )}
-      {!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}
-      {isLoading && <SkeletonFeed />}
+      {(isLoading || isFetching) && <SkeletonFeed />}
       {/*{isError && !isLoading && <ErrorState />}*/}
+      {!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}
       {!isError && !isLoading && <Feed data={dataFromApi} />}
       <ConfirmModal
         closeModal={closeConfirmationModal}

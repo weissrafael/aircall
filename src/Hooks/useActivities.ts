@@ -21,7 +21,8 @@ const useGetActivities = (filter: FilterActivitiesEnum) => {
     ActivityApiResource[]
   >([]);
 
-  const { data, isLoading, isError, refetch } = useFetchActivities();
+  const { data, isLoading, isError, refetch, isFetching } =
+    useFetchActivities();
 
   useEffect(() => {
     if (data) {
@@ -51,6 +52,7 @@ const useGetActivities = (filter: FilterActivitiesEnum) => {
     rawArchivedActivitiesList,
     rawUnarchivedActivitiesList,
     rawFullActivitiesList,
+    isFetching,
     refetch,
   };
 };

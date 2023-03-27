@@ -1,15 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
+import { patchArchiveActivity } from 'API/Mutations/activity';
+import { QueryKeys } from 'API/QueryKeys';
+import useActivities from 'Hooks/useActivities';
 import {
   ArchiveType,
   FilterActivitiesEnum,
 } from 'Models/ActitivityApiResource';
-
-import { patchArchiveActivity } from '../API/Mutations/activity';
-import { QueryKeys } from '../API/QueryKeys';
-
-import useActivities from './useActivities';
 
 const useArchiveAll = (
   closeConfirmationModal: () => void,

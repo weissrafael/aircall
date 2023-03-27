@@ -3,9 +3,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import RoundButton from 'Components/RoundButton/RoundButton';
+import { AWSIllustrationsUrl, IllustrationNames } from 'Constants/AWS';
 import { ErrorHeader, ErrorImage, PageBody } from 'Styles/common.styles';
-
-import { AWSIllustrationsUrl, IllustrationNames } from '../Constants/AWS';
 
 function NotFound() {
   const navigate = useNavigate();

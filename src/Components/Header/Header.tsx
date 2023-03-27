@@ -5,8 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { TabsEnum } from 'Models/UserInterfaceResources';
-
-import { ScreenLimiter } from '../../Styles/common.styles';
+import { ScreenLimiter } from 'Styles/common.styles';
 
 import {
   HeaderContainer,

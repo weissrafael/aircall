@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 
+import { TabButton } from 'Styles/common.styles';
 import {
   borderType,
   colors,
@@ -8,8 +9,6 @@ import {
   shadows,
   spacing,
 } from 'Styles/styleGuide';
-
-import { TabButton } from '../../Styles/common.styles';
 
 const headerHeightMobile = 60;
 const headerHeightDesktop = 80;

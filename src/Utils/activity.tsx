@@ -6,8 +6,7 @@ import VoicemailIcon from '@mui/icons-material/Voicemail';
 import React from 'react';
 
 import { CallTypeEnum, DirectionEnum } from 'Models/ActivityResource';
-
-import { colors } from '../Styles/styleGuide';
+import { colors } from 'Styles/styleGuide';
 
 export function getActivityCallTypeIcon(
   direction?: DirectionEnum,

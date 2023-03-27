@@ -1,18 +1,22 @@
 import React from 'react';
 
+import CardSkeletonLoader from 'Components/CardSkeletonLoader/CardSkeletonLoader';
 import { ActivitiesList } from 'Components/Feed/styles';
+import { PageHeader } from 'Styles/common.styles';
 
-import CardSkeletonLoader from '../CardSkeletonLoader/CardSkeletonLoader';
-
-//create empty array of 10 items
 const skeletonArray = Array.from(Array(10).keys());
 
 export default function SkeletonFeed() {
   return (
-    <ActivitiesList>
-      {skeletonArray.map((item) => (
-        <CardSkeletonLoader key={item} />
-      ))}
-    </ActivitiesList>
+    <>
+      <PageHeader>
+        <h1>Loading...</h1>
+      </PageHeader>
+      <ActivitiesList>
+        {skeletonArray.map((item) => (
+          <CardSkeletonLoader key={item} />
+        ))}
+      </ActivitiesList>
+    </>
   );
 }

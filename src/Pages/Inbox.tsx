@@ -23,6 +23,7 @@ function Inbox() {
     isLoading,
     isError,
     data: dataFromApi,
+    isFetching,
   } = useActivities.useGetActivities(FilterActivitiesEnum.nonArchived);
 
   const {
@@ -33,14 +34,16 @@ function Inbox() {
 
   return (
     <>
-      <PageHeader>
-        <h1>Inbox</h1>
-        <RoundButton onClick={openConfirmationModal}>
-          Archive all
-          <ArchiveIcon style={{ marginLeft: 8 }} />
-        </RoundButton>
-      </PageHeader>
-      {isLoading && <SkeletonFeed />}
+      {!isError && !isLoading && !isFetching && dataFromApi.length > 0 && (
+        <PageHeader>
+          <h1>Inbox</h1>
+          <RoundButton onClick={openConfirmationModal}>
+            Archive all
+            <ArchiveIcon style={{ marginLeft: 8 }} />
+          </RoundButton>
+        </PageHeader>
+      )}
+      {(isLoading || isFetching) && <SkeletonFeed />}
       {/*{isError && !isLoading && <ErrorState />}*/}
       {!isError && !isLoading && dataFromApi.length === 0 && <EmptyState />}
       {!isError && !isLoading && <Feed data={dataFromApi} />}

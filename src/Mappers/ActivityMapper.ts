@@ -1,9 +1,9 @@
-import { ActivityApiResource } from '../Models/ActitivityApiResource';
+import { ActivityApiResource } from 'Models/ActitivityApiResource';
 import {
   ActivityResource,
   CallTypeEnum,
   DirectionEnum,
-} from '../Models/ActivityResource';
+} from 'Models/ActivityResource';
 
 export default function activityMapper(
   rawActivities: ActivityApiResource[]
