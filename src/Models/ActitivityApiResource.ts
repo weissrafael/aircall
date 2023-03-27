@@ -21,8 +21,13 @@ export enum DirectionApiEnum {
   outbound = 'outbound',
 }
 
-export enum filterActivitiesEnum {
+export enum FilterActivitiesEnum {
   isArchived = 'isArchived',
   nonArchived = 'nonArchived',
   all = 'all',
+}
+
+export enum ArchiveType {
+  archive = 'archive',
+  unarchive = 'unarchive',
 }

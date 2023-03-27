@@ -1,66 +1,39 @@
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React from 'react';
 
-import { patchArchiveActivity } from 'API/Mutations/activity';
-import { QueryKeys } from 'API/QueryKeys';
 import ConfirmModal from 'Components/ConfirmModal/ConfirmModal';
 import Feed from 'Components/Feed/Feed';
 import RoundButton from 'Components/RoundButton/RoundButton';
 import SkeletonFeed from 'Components/SkeletonFeed/Feed';
 import useActivities from 'Hooks/useActivities';
-import { filterActivitiesEnum } from 'Models/ActitivityApiResource';
+import {
+  ArchiveType,
+  FilterActivitiesEnum,
+} from 'Models/ActitivityApiResource';
 import { PageHeader } from 'Styles/common.styles';
 
 import EmptyState from '../Components/EmptyState/EmptyState';
+import useArchiveAll from '../Hooks/useArchiveAll';
+import useModal from '../Hooks/useModal';
 
 function Archived() {
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [loading, setIsLoading] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const { openConfirmationModal, closeConfirmationModal, modalIsOpen } =
+    useModal.useModal();
 
   const {
     isLoading,
     isError,
     data: dataFromApi,
-    rawArchivedActivitiesList,
-    refetch,
-  } = useActivities.useGetActivities(filterActivitiesEnum.isArchived);
+  } = useActivities.useGetActivities(FilterActivitiesEnum.isArchived);
 
-  const openConfirmationModal = () => {
-    setModalIsOpen(true);
-  };
-  const queryClient = useQueryClient();
-
-  interface Props {
-    isArchived: boolean;
-    id: string;
-  }
-
-  const mutateArchiveActivity = useMutation(
-    async ({ isArchived, id }: Props) => {
-      await patchArchiveActivity({ is_archived: !isArchived }, id);
-    }
+  const {
+    isLoading: mutateLoading,
+    archiveAll,
+    isSuccess,
+  } = useArchiveAll.useArchiveAll(
+    closeConfirmationModal,
+    ArchiveType.unarchive
   );
-
-  const archiveAll = async () => {
-    setIsLoading(true);
-    await rawArchivedActivitiesList.forEach((activity) => {
-      mutateArchiveActivity.mutate({
-        isArchived: activity.is_archived,
-        id: activity.id,
-      });
-    });
-    await queryClient.invalidateQueries([QueryKeys.activityList]);
-    await refetch();
-    mutateArchiveActivity.reset();
-    setIsLoading(false);
-    setIsSuccess(true);
-    setTimeout(() => {
-      setIsSuccess(false);
-      setModalIsOpen(false);
-    }, 1300);
-  };
 
   return (
     <>
@@ -78,11 +51,11 @@ function Archived() {
       {/*{isError && !isLoading && <ErrorState />}*/}
       {!isError && !isLoading && <Feed data={dataFromApi} />}
       <ConfirmModal
-        closeModal={() => setModalIsOpen(false)}
+        closeModal={closeConfirmationModal}
         isOpen={modalIsOpen}
         message="Are you sure you want to unarchive all calls?"
         onClick={archiveAll}
-        isLoading={loading}
+        isLoading={mutateLoading}
         isError={false}
         isSuccess={isSuccess}
       />

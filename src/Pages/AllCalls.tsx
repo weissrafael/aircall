@@ -4,7 +4,7 @@ import EmptyState from 'Components/EmptyState/EmptyState';
 import Feed from 'Components/Feed/Feed';
 import SkeletonFeed from 'Components/SkeletonFeed/Feed';
 import useActivities from 'Hooks/useActivities';
-import { filterActivitiesEnum } from 'Models/ActitivityApiResource';
+import { FilterActivitiesEnum } from 'Models/ActitivityApiResource';
 import { PageHeader } from 'Styles/common.styles';
 
 function AllCalls() {
@@ -12,7 +12,7 @@ function AllCalls() {
     isLoading,
     isError,
     data: dataFromApi,
-  } = useActivities.useGetActivities(filterActivitiesEnum.all);
+  } = useActivities.useGetActivities(FilterActivitiesEnum.all);
 
   return (
     <>

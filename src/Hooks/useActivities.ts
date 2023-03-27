@@ -5,12 +5,12 @@ import ActivityMapper, {
   filterArchivedActivities,
 } from 'Mappers/ActivityMapper';
 import {
-  filterActivitiesEnum,
+  FilterActivitiesEnum,
   ActivityApiResource,
 } from 'Models/ActitivityApiResource';
 import { ActivityResource } from 'Models/ActivityResource';
 
-const useGetActivities = (filter: filterActivitiesEnum) => {
+const useGetActivities = (filter: FilterActivitiesEnum) => {
   const [activities, setActivities] = useState<ActivityResource[]>([]);
   const [rawArchivedActivitiesList, setRawArchivedActivitiesList] = useState<
     ActivityApiResource[]
@@ -26,7 +26,7 @@ const useGetActivities = (filter: filterActivitiesEnum) => {
   useEffect(() => {
     if (data) {
       setRawFullActivitiesList(data);
-      if (filter === filterActivitiesEnum.all) {
+      if (filter === FilterActivitiesEnum.all) {
         const activitiesFromServer = ActivityMapper(data);
         setActivities(activitiesFromServer);
       } else {
@@ -35,7 +35,7 @@ const useGetActivities = (filter: filterActivitiesEnum) => {
         setRawUnarchivedActivitiesList(nonArchivedCalls);
         setRawArchivedActivitiesList(archivedCalls);
         const activitiesFromServer = ActivityMapper(
-          filter === filterActivitiesEnum.isArchived
+          filter === FilterActivitiesEnum.isArchived
             ? archivedCalls
             : nonArchivedCalls
         );
