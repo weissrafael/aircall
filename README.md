@@ -41,7 +41,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 - [x] O(n) solution for grouping activities
 - [x] Improved user experience with nice transitions
 - [x] All animations made with CSS (no libraries)
-- [x] The App is deployed on Heroku
+- [x] The App is deployed on Netlify and AWS
 - [x] Error handling with Error Boundary
 - [x] Error page, 404 page, empty list page
 - [x] All images stored on AWS with american CDN
