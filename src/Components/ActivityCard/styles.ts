@@ -133,8 +133,13 @@ export const ErrorContainer = styled.div`
 
 export const ErrorMessage = styled.div`
   color: ${colors.negative};
-  font-size: ${text.smallBody};
+  font-size: ${text.notification};
   margin-right: ${spacing.xxSmall};
+  max-width: 70px;
+  @media (min-width: ${screens.xSmall}px) {
+    font-size: ${text.smallBody};
+    max-width: 100%;
+  }
 `;
 
 export const StyledErrorIcon = styled(ErrorIcon)`

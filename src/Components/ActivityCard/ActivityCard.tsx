@@ -54,7 +54,7 @@ export default function ActivityCard({ activity, disableArchive }: Props) {
   const [toBeArchived, setToBeArchived] = useState<boolean>(false);
   const [archived, setArchived] = useState<boolean>(false);
   const [expand, setExpand] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(true);
   const callTypeIcon = getActivityCallTypeIcon(direction, callType);
   const numberOfGroupedCalls =
     groupedCalls.length > 0 ? groupedCalls.length : 1;

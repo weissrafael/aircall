@@ -33,6 +33,7 @@ export const text = {
   paragraph: '0.9rem',
   smallBody: '0.8rem',
   notification: '0.75rem',
+  errorMessageMobile: '0.55rem',
 };
 
 export const borderType = {
