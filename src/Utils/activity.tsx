@@ -40,6 +40,9 @@ export function getActivityCallTypeIcon(
 }
 
 export function getDurationInfo(duration: number): string {
+  if (!duration) {
+    return ' - ';
+  }
   const durationMinutes = Math.floor(duration / 60);
   const durationSeconds = duration % 60;
   let durationInfo = '';
